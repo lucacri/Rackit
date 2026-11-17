@@ -1,0 +1,4 @@
+.DS_Store
+*.scad.bak
+__pycache__/
+/tmp/

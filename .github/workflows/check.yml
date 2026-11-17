@@ -1,0 +1,38 @@
+name: build-and-check
+
+# Rebuild every STL from the CAD sources and run the fit checks
+# (bed size, 1U envelope, part-to-part interference) on every push / PR.
+on:
+  push:
+    paths: ["cad/**", "tools/**", ".github/workflows/**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install OpenSCAD + Python deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openscad
+          python -m pip install trimesh
+      - name: Build STLs
+        run: tools/build.sh --stl-only
+      - name: Check fit
+        run: python3 tools/check.py
+      - name: STLs differ from the committed ones?
+        run: |
+          git status --porcelain stl/
+          if [ -n "$(git status --porcelain stl/)" ]; then
+            echo "::warning::Committed STLs are out of date - run tools/build.sh and commit stl/"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stl
+          path: stl/

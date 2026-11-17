@@ -1,0 +1,13 @@
+# Every printable part: <scad file>  <PART>  <output stl>
+# tools/build.sh exports each line; tools/check.py checks each output.
+# Output names start with the print order (0 = tests first).
+cad/rackit_standard.scad      test_knuckle        stl/tests/0_test_knuckle.stl
+cad/rackit_standard.scad      test_ledge_plate    stl/tests/0_test_ledge_plate.stl
+cad/rackit_standard.scad      ear_left            stl/standard/1_ear_left.stl
+cad/rackit_standard.scad      ear_right           stl/standard/1_ear_right.stl
+cad/rackit_standard.scad      spine_left          stl/standard/2_spine_left.stl
+cad/rackit_standard.scad      spine_right         stl/standard/2_spine_right.stl
+cad/devices/wyse5070.scad     template            stl/devices/wyse5070/0_wyse_hole_template.stl
+cad/devices/wyse5070.scad     harness_print       stl/devices/wyse5070/3_harness_wyse.stl
+cad/devices/wyse5070.scad     harness_psu_print   stl/devices/wyse5070/3_harness_wyse_psu.stl
+cad/devices/wyse5070.scad     psu_caddy_print     stl/devices/wyse5070/4_psu_caddy.stl
